@@ -10,12 +10,27 @@ function DecoradoClase(target) {
         console.log("Hola");
     };
 }
+function DecoradoMetodo(esModificable) {
+    return function (traget, nombrePropiedad, descriptor) {
+        descriptor.writable = esModificable;
+    };
+}
 let Persona = class Persona {
     constructor() {
     }
+    EnviarMensaje() {
+        console.log("Enviar mensaje");
+    }
 };
+__decorate([
+    DecoradoMetodo(true)
+], Persona.prototype, "EnviarMensaje", null);
 Persona = __decorate([
     DecoradoClase
 ], Persona);
 let persona1 = new Persona();
 persona1.Saludar();
+persona1.EnviarMensaje = function () {
+    console.log("Modificar");
+};
+persona1.EnviarMensaje();
